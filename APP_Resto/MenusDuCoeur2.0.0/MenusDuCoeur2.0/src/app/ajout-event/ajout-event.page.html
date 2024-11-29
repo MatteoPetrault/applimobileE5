@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Ajouter un évènement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Formulaire d'ajout d'événement</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-label position="floating">Nom de l'événement</ion-label>
+          <ion-input [(ngModel)]="label_event" name="label_event" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de bénévoles requis</ion-label>
+          <ion-input [(ngModel)]="nbBenevoleRequis" name="nbBenevoleRequis" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de repas prévu</ion-label>
+          <ion-input [(ngModel)]="nb_repas_prevu" name="nb_repas_prevu" type="number" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Ville</ion-label>
+          <ion-input [(ngModel)]="ville_event" name="ville_event" required (ionBlur)="getCityDetails()"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Code Postal</ion-label>
+          <ion-input [(ngModel)]="cp_event" name="cp_event" [readonly]="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Latitude</ion-label>
+          <ion-input [(ngModel)]="latitude_event" name="latitude_event" [readonly]="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Longitude</ion-label>
+          <ion-input [(ngModel)]="longitude_event" name="longitude_event" [readonly]="true"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Rue</ion-label>
+          <ion-input [(ngModel)]="rue_event" name="rue_event" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Date de l'événement</ion-label>
+          <ion-input [(ngModel)]="date_event" name="date_event" type="date" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Heure de début</ion-label>
+          <ion-input [(ngModel)]="heure_debut_event" name="heure_debut_event" type="time" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Heure de fin</ion-label>
+          <ion-input [(ngModel)]="heure_fin_event" name="heure_fin_event" type="time" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Commentaire</ion-label>
+          <ion-input [(ngModel)]="commentaire" name="commentaire"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Date d'annulation (si applicable)</ion-label>
+          <ion-input [(ngModel)]="date_annulation" name="date_annulation" type="datetime-local"></ion-input>
+        </ion-item>
+
+        <ion-row>
+          <ion-col>
+            <ion-button expand="full" type="submit">Ajouter l'événement</ion-button>
+          </ion-col>
+        </ion-row>
+        <br><br><br>
+        <h6>Création Mattéo Petrault</h6>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

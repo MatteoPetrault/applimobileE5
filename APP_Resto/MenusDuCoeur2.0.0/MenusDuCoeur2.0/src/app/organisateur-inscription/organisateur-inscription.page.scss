@@ -1,0 +1,49 @@
+/* Mise en forme de la page */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.scroll-space {
+  height: 400vh;
+  /* Ajoute une hauteur équivalente à 100% de la hauteur de l'écran */
+}
+
+/* Gestion des boutons */
+.button-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Confirmation message styling */
+.confirmation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.clock-icon {
+  font-size: 4rem;
+  color: var(--ion-color-primary);
+  margin-bottom: 1rem;
+}
+
+.confirmation-message {
+  font-size: 1rem;
+  color: var(--ion-text-color);
+}
+
+/* Responsivité */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 0 1rem;
+  }
+
+  .clock-icon {
+    font-size: 3rem;
+  }
+}

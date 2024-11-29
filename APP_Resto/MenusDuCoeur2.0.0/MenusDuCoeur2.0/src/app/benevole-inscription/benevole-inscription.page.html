@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Inscription benevole</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Formulaire d'inscription -->
+  <ng-container *ngIf="!isSubmitted; else confirmationMessage">
+    <form (ngSubmit)="submitForm()" [formGroup]="benevoleForm" class="form-container">
+      <ion-item>
+        <ion-label position="floating">Pseudo</ion-label>
+        <ion-input type="text" formControlName="pseudo_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Mot de Passe</ion-label>
+        <ion-input type="password" formControlName="mdp_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Nom</ion-label>
+        <ion-input type="text" formControlName="nom_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Prénom</ion-label>
+        <ion-input type="text" formControlName="prenom_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Téléphone</ion-label>
+        <ion-input type="tel" formControlName="tel_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Code Postal</ion-label>
+        <ion-input type="text" formControlName="cp_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Ville</ion-label>
+        <ion-input type="text" formControlName="ville_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Rue</ion-label>
+        <ion-input type="text" formControlName="rue_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Date de Naissance</ion-label>
+        <br>
+        <ion-input type="date" formControlName="date_naissance"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="mail_util"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Message de Motivation</ion-label>
+        <ion-textarea formControlName="message_motiv_util"></ion-textarea>
+      </ion-item>
+
+      <div class="button-container">
+        <ion-button expand="block" type="submit" [disabled]="!benevoleForm.valid">
+          S'inscrire
+        </ion-button>
+      </div>
+      <br>
+      <br>
+      <br>
+      <h6>Création Mattéo Petrault</h6>
+    </form>
+  </ng-container>
+
+  <ng-template #confirmationMessage>
+    <div class="confirmation-container">
+      <ion-icon name="time-outline" class="clock-icon"></ion-icon>
+      <p class="confirmation-message">
+        Votre demande d'inscription va être traitée par les administrateurs dans les prochains jours.
+        Vous recevrez un mail lorsque celle-ci sera acceptée.
+      </p>
+    </div>
+
+    <!-- Ajout d'espace pour le défilement -->
+
+  </ng-template>
+
+</ion-content>

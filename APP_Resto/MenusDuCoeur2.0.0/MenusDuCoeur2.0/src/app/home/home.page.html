@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Bouton de menu -->
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bienvenue à l'accueil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">Déconnexion</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Menu latéral -->
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item routerLink="/liste-event">Mes évènements</ion-item>
+      <ion-item *ngIf="id_role === 1" routerLink="/demande">Inscription en attente</ion-item>
+      <ion-item *ngIf="id_role === 2" routerLink="/demande">Inscription en attente</ion-item>
+      <ion-item *ngIf="id_role === 1" routerLink="/ajout-event">Ajouter un événement</ion-item>
+      <ion-item *ngIf="id_role === 2" routerLink="/ajout-event">Ajouter un événement</ion-item>
+      <ion-item *ngIf="id_role === 3" routerLink="/ajout-event">Ajouter un événement</ion-item>
+      <ion-item *ngIf="id_role === 1" routerLink="/supprimer-event">Supprimer un événement</ion-item>
+      <ion-item *ngIf="id_role === 2" routerLink="/supprimer-event">Supprimer un événement</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- Carte -->
+<h1>Menu's du Cœur</h1>
+
+<!-- Afficher ou masquer le texte -->
+<ng-container *ngIf="isTextVisible">
+  <h4>Présentation :</h4>
+  <p>Menu's du Cœur est une application mobile dédiée aux organisateurs et bénévoles pour planifier et gérer les
+    événements solidaires proposant des repas gratuits. Accessible uniquement aux acteurs de l'organisation, elle
+    facilite la création d'événements géolocalisés et la coordination des équipes, tout en excluant la gestion des menus
+    et
+    l'accès des bénéficiaires.</p>
+</ng-container>
+
+<!-- Bouton de bascule texte -->
+<ion-button fill="clear" size="small" color="primary" (click)="toggleText()">
+  {{ isTextVisible ? 'Fermer' : 'Afficher' }} le texte
+</ion-button>
+
+<!-- Carte (augmente l'espace lorsque le texte est masqué) -->
+<div id="map" style="height: 70vh;"></div>
+
+<!-- Bouton Réinitialiser -->
+<ion-button (click)="resetFilter()" fill="solid" expand="block" color="secondary"
+  style="margin-top: 10px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);">
+  Réinitialiser
+</ion-button>
+
+<!-- Légende -->
+<div
+  style="display: flex; align-items: center; margin-top: 20px; padding: 10px; background-color: #f4f4f4; border-radius: 5px;">
+  <span style="width: 20px; height: 20px; background-color: green; border-radius: 50%; margin-right: 10px;"
+    (click)="filterEvents('green')"></span>
+  <span style="color: black;">Volontaires OK</span>
+
+  <span
+    style="width: 20px; height: 20px; background-color: blue; border-radius: 50%; margin-right: 10px; margin-left: 20px;"
+    (click)="filterEvents('blue')"></span>
+  <span style="color: black;">Événement loin</span>
+
+  <span
+    style="width: 20px; height: 20px; background-color: orange; border-radius: 50%; margin-right: 10px; margin-left: 20px;"
+    (click)="filterEvents('orange')"></span>
+  <span style="color: black;">Urgence modérée</span>
+
+  <span style="width: 20px; height: 20px; background-color: red; border-radius: 50%; margin-left: 20px;"
+    (click)="filterEvents('red')"></span>
+  <span style="color: black;">Urgence critique</span>
+</div>
+
+<!-- Sidemenus -->
+<ion-content id="main-content"></ion-content>

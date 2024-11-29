@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Détails de l'Événement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Titre de l'événement -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'label'; else editLabel">
+      {{ eventDetails.label }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('label')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editLabel>
+      <ion-input [(ngModel)]="eventDetails.label" placeholder="Entrez le nouveau titre"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('label')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Date -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'date'; else editDate">
+      {{ eventDetails.date | date: 'dd/MM/yyyy' }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('date')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editDate>
+      <ion-datetime [(ngModel)]="eventDetails.date" placeholder="Sélectionnez une date"></ion-datetime>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('date')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+
+  <!-- Nombre de bénévoles requis -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'nbBenevoleRequis'; else editNbBenevoleRequis">
+      {{ eventDetails.nbBenevoleRequis }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('nbBenevoleRequis')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editNbBenevoleRequis>
+      <ion-input [(ngModel)]="eventDetails.nbBenevoleRequis" type="number"
+        placeholder="Entrez le nombre de bénévoles requis"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('nbBenevoleRequis')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Nombre de plats prévus -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'nbRepasPrevu'; else editNbRepasPrevu">
+      {{ eventDetails.nbRepasPrevu }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('nbRepasPrevu')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editNbRepasPrevu>
+      <ion-input [(ngModel)]="eventDetails.nbRepasPrevu" type="number"
+        placeholder="Entrez le nombre de plats prévus"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('nbRepasPrevu')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Heure de début -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'heureDebut'; else editHeureDebut">
+      {{ eventDetails.heureDebut }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('heureDebut')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editHeureDebut>
+      <ion-input [(ngModel)]="eventDetails.heureDebut" type="time" placeholder="Entrez l'heure de début"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('heureDebut')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Heure de fin -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'heureFin'; else editHeureFin">
+      {{ eventDetails.heureFin }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('heureFin')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editHeureFin>
+      <ion-input [(ngModel)]="eventDetails.heureFin" type="time" placeholder="Entrez l'heure de fin"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('heureFin')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Lieu -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'lieu'; else editLieu">
+      {{ eventDetails.rue }}, {{ eventDetails.ville }}, {{ eventDetails.cp }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('lieu')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editLieu>
+      <ion-input [(ngModel)]="eventDetails.rue" placeholder="Entrez la rue"></ion-input>
+      <ion-input [(ngModel)]="eventDetails.ville" placeholder="Entrez la ville"></ion-input>
+      <ion-input [(ngModel)]="eventDetails.cp" placeholder="Entrez le code postal"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('lieu')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Latitude -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'latitude'; else editLatitude">
+      {{ eventDetails.latitude }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('latitude')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editLatitude>
+      <ion-input [(ngModel)]="eventDetails.latitude" type="number" placeholder="Entrez la latitude"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('latitude')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Longitude -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'longitude'; else editLongitude">
+      {{ eventDetails.longitude }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('longitude')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editLongitude>
+      <ion-input [(ngModel)]="eventDetails.longitude" type="number" placeholder="Entrez la longitude"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('longitude')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Commentaire -->
+  <h4>
+    <ng-container *ngIf="isEditing !== 'commentaire'; else editCommentaire">
+      {{ eventDetails.commentaire }}
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="activerModification('commentaire')">Modifier</ion-button>
+    </ng-container>
+    <ng-template #editCommentaire>
+      <ion-input [(ngModel)]="eventDetails.commentaire" placeholder="Entrez un commentaire"></ion-input>
+      <ion-button fill="outline" size="small" color="primary"
+        (click)="saveModification('commentaire')">Enregistrer</ion-button>
+    </ng-template>
+  </h4>
+
+  <!-- Bouton Modifier principal -->
+  <ion-button expand="full" (click)="modifierEvenement(eventDetails.id_event)">Modifier</ion-button>
+</ion-content>
