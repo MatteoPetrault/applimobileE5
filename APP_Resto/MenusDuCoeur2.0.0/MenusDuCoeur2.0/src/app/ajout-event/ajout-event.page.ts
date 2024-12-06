@@ -23,24 +23,28 @@ export class AjoutEventPage implements OnInit {
   heure_fin_event: string = '';
   commentaire: string = '';
   date_annulation: string = '';
-  id_util!: number; // L'ID de l'utilisateur connecté
+  id_util!: any; // L'ID de l'utilisateur connecté
   longitude_event: string = '';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
   ngOnInit() {
     // Cette méthode est appelée à l'initialisation du composant
     console.log('AjoutEventPage initialized');
+    this.id_util = this.authService.getUserId();  // Assure-toi que la méthode getUserId() retourne l'ID de l'utilisateur connecté
+    console.log('Utilisateur ID:', this.id_util)
+
 
   }
   async getCityDetails() {
     const cityInput = this.ville_event.trim();
+    const rueInput = this.rue_event.trim();
     if (cityInput.length < 3) {
       this.resetCoordinates();
       return;
     }
 
     try {
-      const apiUrl = `https://api-adresse.data.gouv.fr/search/?q=${cityInput}&type=municipality&limit=1`;
+      const apiUrl = `https://api-adresse.data.gouv.fr/search/?q=${rueInput}+${cityInput}&limit=1`;
       const response = await axios.get(apiUrl);
       if (response.data && response.data.features.length > 0) {
         const city = response.data.features[0].properties;

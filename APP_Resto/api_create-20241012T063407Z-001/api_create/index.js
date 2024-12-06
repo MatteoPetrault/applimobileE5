@@ -17,6 +17,7 @@ const pool = mysql.createPool({
   user: 'root',
   password: '',
   database: 'matteo',
+  //port : 3306,
 });
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -798,7 +799,6 @@ app.get('/api/evenements/suppression', (req, res) => {
   });
 });
 
-// Modifiez votre route pour qu'elle accepte un paramètre `id` dans l'URL
 app.delete('/api/evenements/suppression/:id', (req, res) => {
   const eventId = req.params.id;
 

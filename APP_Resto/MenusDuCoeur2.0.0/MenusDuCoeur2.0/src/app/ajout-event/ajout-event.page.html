@@ -30,32 +30,33 @@
         </ion-item>
 
         <ion-item>
+          <ion-label position="floating">Rue</ion-label>
+          <ion-input [(ngModel)]="rue_event" name="rue_event" required (ionBlur)="getCityDetails()"></ion-input>
+        </ion-item>
+
+        <ion-item>
           <ion-label position="floating">Ville</ion-label>
           <ion-input [(ngModel)]="ville_event" name="ville_event" required (ionBlur)="getCityDetails()"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="ville_event && rue_event">
           <ion-label position="floating">Code Postal</ion-label>
           <ion-input [(ngModel)]="cp_event" name="cp_event" [readonly]="true"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="ville_event && rue_event">
           <ion-label position="floating">Latitude</ion-label>
           <ion-input [(ngModel)]="latitude_event" name="latitude_event" [readonly]="true"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="ville_event && rue_event">
           <ion-label position="floating">Longitude</ion-label>
           <ion-input [(ngModel)]="longitude_event" name="longitude_event" [readonly]="true"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Rue</ion-label>
-          <ion-input [(ngModel)]="rue_event" name="rue_event" required></ion-input>
-        </ion-item>
-
-        <ion-item>
           <ion-label position="floating">Date de l'événement</ion-label>
+          <br>
           <ion-input [(ngModel)]="date_event" name="date_event" type="date" required></ion-input>
         </ion-item>
 
@@ -76,6 +77,7 @@
 
         <ion-item>
           <ion-label position="floating">Date d'annulation (si applicable)</ion-label>
+          <br>
           <ion-input [(ngModel)]="date_annulation" name="date_annulation" type="datetime-local"></ion-input>
         </ion-item>
 
@@ -84,7 +86,7 @@
             <ion-button expand="full" type="submit">Ajouter l'événement</ion-button>
           </ion-col>
         </ion-row>
-        <br><br><br>
+        <br><br><br><br><br>
         <h6>Création MaTttéo Petrault</h6>
       </form>
     </ion-card-content>
