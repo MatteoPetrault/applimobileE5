@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Supprimer un évènement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let event of events">
+      <ion-label>
+        <h2>{{ event.label_event }}</h2>
+        <p>Adresse : {{ event.adresse_event }}</p>
+        <p>Date : {{ event.date_event }}</p>
+      </ion-label>
+      <ion-button color="danger" (click)="supprimerEvent(event.id_event)">Supprimer</ion-button>
+
+    </ion-item>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h6>Création par Mattéo Petrault</h6>
+  </ion-list>
+</ion-content>

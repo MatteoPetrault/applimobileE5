@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Détails de l'Événement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Titre de l'événement -->
+  <h2>{{ eventDetails.label }}</h2>
+
+  <!-- Informations sur l'événement -->
+  <p>Date : {{ eventDetails.date | date }}</p>
+  <p>Heure de début : {{ eventDetails.heureDebut }}</p>
+  <p>Lieu : {{ eventDetails.rue }}, {{ eventDetails.ville }}</p>
+  <p>Commentaire : {{ eventDetails.commentaire }}</p>
+
+  <!-- Bouton d'inscription -->
+  <ion-button *ngIf="!isUserRegistered" expand="full" color="primary" (click)="presentConfirmation()">
+    S'inscrire maintenant
+  </ion-button>
+
+  <!-- Bouton de désinscription -->
+  <ion-button *ngIf="isUserRegistered" expand="full" color="danger" (click)="presentUnsubscribeConfirmation()">
+    Se désinscrire
+  </ion-button>
+
+  <!-- Message de confirmation d'inscription -->
+  <p *ngIf="inscriptionMessage" style="color: green;">
+    {{ inscriptionMessage }}
+  </p>
+</ion-content>

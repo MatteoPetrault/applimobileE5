@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">Retour</ion-button>
+    </ion-buttons>
+    <ion-title>Liste des inscriptions en attente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let inscription of inscriptions">
+      <ion-label>
+        <h2>Nom : {{ inscription.nom_util }}</h2>
+        <h3>Prénom : {{ inscription.prenom_util }}</h3>
+        <p>Message : {{ inscription.message_motiv_util }}</p>
+        <p>Date : {{ inscription.date_cree_util | date:'yyyy-MM-dd' }}</p>
+        <p>Rôle : {{ inscription.label_role }}</p>
+      </ion-label>
+      <ion-button color="success" (click)="presentAccepter(inscription.id_util)">Accepter</ion-button>
+      <ion-button color="danger" (click)="presentUnsubscribeConfirmation(inscription.id_util)">Refuser</ion-button>
+    </ion-item>
+  </ion-list>
+  <br><br><br><br><br>
+  <h6>Création MaTttéo Petrault</h6>
+</ion-content>

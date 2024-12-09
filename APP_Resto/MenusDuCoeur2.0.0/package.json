@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@ionic-native/geolocation": "^5.36.0",
+    "@ionic-native/google-maps": "^5.5.0",
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mysql": "^2.18.1"
+  }
+}

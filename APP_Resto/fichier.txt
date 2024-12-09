@@ -1,0 +1,160 @@
+Remplacer les mot de passe dans la bdd :
+avec cette commande : 
+UPDATE `app_utilisateurs`
+SET `mdp_util` = `comment`;
+
+
+
+bcypte.js : const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+
+// Connexion à la base de données
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'matteo',
+});
+
+// Fonction pour mettre à jour tous les mots de passe en clair avec des mots de passe hachés
+const updatePasswords = () => {
+    pool.query('SELECT * FROM app_utilisateurs WHERE mdp_util IS NOT NULL', (error, results) => {
+        if (error) {
+            console.error('Erreur de requête :', error);
+            return;
+        }
+
+        results.forEach((user) => {
+            bcrypt.hash(user.mdp_util, 10, (err, hashedPassword) => {
+                if (err) {
+                    console.error('Erreur lors du hachage du mot de passe pour l\'utilisateur', user.mail_util);
+                    return;
+                }
+
+                // Mise à jour du mot de passe haché dans la base de données
+                pool.query(
+                    'UPDATE app_utilisateurs SET mdp_util = ? WHERE id_util = ?',
+                    [hashedPassword, user.id_util], // Assurez-vous de remplacer "id_util" par l'ID de votre utilisateur
+                    (updateErr) => {
+                        if (updateErr) {
+                            console.error('Erreur lors de la mise à jour du mot de passe pour l\'utilisateur', user.mail_util);
+                        } else {
+                            console.log(`Mot de passe de ${user.mail_util} mis à jour avec succès.`);
+                        }
+                    }
+                );
+            });
+        });
+    });
+};
+
+// Lancer la mise à jour des mots de passe
+updatePasswords();
+
+
+
+le lancer avec node 
+
+
+
+
+index.js : 
+const express = require('express');
+const cors = require('cors');
+const mysql = require('mysql');
+const bcrypt = require('bcrypt');  // Ajout de bcrypt
+const app = express();
+const port = 3001;
+
+app.use(express.json());
+
+// CORS configuration
+app.use(cors()); // Autorise toutes les origines
+
+// Connexion à la base de données
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'matteo',
+});
+
+// Route de connexion
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Veuillez fournir un email et un mot de passe.' });
+  }
+
+  pool.query('SELECT * FROM app_utilisateurs WHERE mail_util = ?', [email], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: 'Erreur serveur.' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+    }
+
+    const user = results[0];
+
+    // Comparaison du mot de passe haché
+    bcrypt.compare(password, user.mdp_util, (err, isMatch) => {
+      if (err) {
+        return res.status(500).json({ message: 'Erreur serveur lors de la comparaison du mot de passe.' });
+      }
+
+      if (isMatch) {
+        return res.status(200).json({ message: 'Connexion réussie', prenom: user.prenom_util, nom: user.nom_util });
+      } else {
+        return res.status(401).json({ message: 'Mot de passe incorrect.' });
+      }
+    });
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Serveur en cours d'exécution sur http://localhost:${port}`);
+});
+
+
+
+inscription: 
+app.post('/api/inscription-organisateur', (req, res) => {
+  const {
+    pseudo_util,
+    mdp_util,
+    nom_util,
+    prenom_util,
+    tel_util,
+    cp_util,
+    ville_util,
+    rue_util,
+    date_naissance,
+    mail_util,
+    message_motiv_util
+  } = req.body;
+
+  // Calculer l'ID du rôle (3 pour organisateur)
+  const id_role = 3;
+  const id_statut = 1; // En cours de validation
+  const date_cree_util = new Date();
+  const date_derniere_connexion = date_cree_util;
+  const date_statuts = null;
+  const comment = null; // Pas de mot de passe haché
+
+  // Requête SQL pour insérer l'organisateur dans la base de données avec le mot de passe en clair
+  pool.query(
+    'INSERT INTO app_utilisateurs (pseudo_util, mdp_util, nom_util, prenom_util, tel_util, cp_util, ville_util, rue_util, date_naissance, mail_util, message_motiv_util, date_derniere_connexion, date_cree_util, date_statuts, id_role, id_statut) VALUES (?, ?, ?,?,?, ?,?,?,?,?, ?,now(), now(), null, 3, 1)',
+    [pseudo_util, mdp_util, nom_util, prenom_util, tel_util, cp_util, ville_util, rue_util, date_naissance, mail_util, message_motiv_util, date_derniere_connexion, date_cree_util, date_statuts],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Erreur lors de l\'insertion de l\'organisateur dans la base de données.' });
+      }
+
+      // Réponse JSON avec un message de succès
+      return res.status(200).json({ message: 'Inscription réussie' });
+    }
+  );
+});
