@@ -450,6 +450,36 @@ app.post('/api/inscription-attente/accepter', (req, res) => {
     }
   });
 });
+// Route POST pour modifier la date de dernière connexion
+app.post('/api/modif/dateDerConnexion', (req, res) => {
+  const { id_util } = req.body; // Récupère l'id_util depuis le corps de la requête
+
+  // Vérification si id_util est fourni
+  if (!id_util) {
+    return res.status(400).json({ message: 'id_util est requis' });
+  }
+
+  // Requête SQL pour mettre à jour la date de dernière connexion de l'utilisateur
+  const query = 'UPDATE `app_utilisateurs` SET `date_derniere_connexion` = NOW() WHERE `id_util` = ?';
+
+  // Exécution de la requête SQL
+  pool.query(query, [id_util], (err, result) => {
+    if (err) {
+      // En cas d'erreur SQL
+      console.error('Erreur SQL lors de la mise à jour de la date de dernière connexion :', err);
+      return res.status(500).json({ message: 'Erreur lors de la modification de la date' });
+    }
+
+    // Vérification si la requête a affecté une ligne
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    // Si la mise à jour est réussie, envoi d'une réponse de succès
+    res.status(200).json({ message: 'Date de dernière connexion mise à jour avec succès' });
+  });
+});
+
 
 // Fonction pour envoyer un email
 const sendMailInscitAccepter = (email) => {

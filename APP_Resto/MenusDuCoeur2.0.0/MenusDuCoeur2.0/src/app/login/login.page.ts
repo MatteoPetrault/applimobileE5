@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
+  standalone: false
 })
 export class LoginPage {
   email: string = ''; // Email de l'utilisateur
@@ -23,6 +23,19 @@ export class LoginPage {
       if (response && response.id) {
         // Si l'ID est valide, rediriger vers la page home avec l'ID en queryParams
         console.log('Utilisateur connecté, ID:', response.id);
+
+        // Appel de l'API pour mettre à jour la date de dernière connexion
+        this.authService.updateLastLogin(response.id).subscribe({
+          next: () => {
+            console.log('Date de dernière connexion mise à jour avec succès');
+          },
+          error: (error) => {
+            console.error('Erreur lors de la mise à jour de la date de dernière connexion', error);
+            this.message = 'Erreur lors de la mise à jour de la date de dernière connexion';
+          }
+        });
+
+        // Rediriger vers la page d'accueil
         this.router.navigate(['/home'], {
           queryParams: { userId: response.id },
         });
